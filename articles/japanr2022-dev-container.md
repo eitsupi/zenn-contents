@@ -5,6 +5,7 @@ type: tech
 topics:
     - r
     - docker
+    - vscode
 published: true
 ---
 
