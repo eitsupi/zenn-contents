@@ -32,7 +32,7 @@ Dev Container Featuresについてまだあまり情報がないように思う�
 
 Dockerfileの断片とコンテナ設定の断片をパッケージングしたようなものです。
 
-昔は`VSCode Remote - Containers`拡張機能に組み込まれていたシェルスクリプトで、拡張機能内での利用に制限されていました。
+昔は`VSCode Remote - Containers`拡張機能（最近`VSCode Dev Containers`に改名）に組み込まれていたシェルスクリプトで、拡張機能内での利用に制限されていました。
 現在はDev Container Specとして標準化され、proposalのステータスも外れ、誰でも作成して公開・配布・利用できるようになっています。
 
 例として、Dev Container CLIを使用してDev Container Featureをコンテナ内で開発する場合に使用されている[^1]Dev Container定義を見てみましょう。
@@ -50,7 +50,7 @@ Dockerfileの断片とコンテナ設定の断片をパッケージングした�
 ```
 
 これだけでnodeインストール済のイメージ上にDocker-in-Dockerが設定され、コンテナ内でDev Container CLIが使用可能になります。
-このjsonファイル以外にDockerfile等の定義ファイルは一切必要ありません。
+このjsonファイル以外にDockerfile等の定義ファイルやコマンドラインオプションは一切必要ありません。
 
 別の例として、最近私の作った[Rustコードを含むRパッケージ](https://github.com/eitsupi/prqlr)のコンテナ定義は以下のようになっています。
 
@@ -71,7 +71,7 @@ Rバージョン4のコンテナ上に最新バージョンのRustをインス�
 
 ## Dev Container Featuresの配布
 
-先ほどのファイルの`features`以下にある`ghcr.io/devcontainers/features/docker-in-docker:2`や`ghcr.io/devcontainers/features/rust`というDev Container Featureの名前でピンときた方もいらっしゃるかと思いますが、
+先ほどのファイルの`features`以下にある`ghcr.io/devcontainers/features/docker-in-docker`や`ghcr.io/devcontainers/features/rust`というDev Container Featureの名前でピンときた方もいらっしゃるかと思いますが、
 Dev Container FeaturesはDockerイメージなどのようにOCIレジストリで配布可能になりました。
 
 GitHub上で配布する場合、公式のGitHub Actionsを使用して簡単に公開・配布できます。
