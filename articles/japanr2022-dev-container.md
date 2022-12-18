@@ -93,7 +93,7 @@ VSCodeやCodespacesのUIに表示させたい場合、devcontainers公式サイ�
 https://github.com/devcontainers/devcontainers.github.io/blob/gh-pages/_data/collection-index.yml
 
 基本的に来る物は拒まずの精神のようで、特に審査もなく登録してもらえると思います。
-登録されている`ociReference`は定期的にクロールされ、そこに含まれているFeature以下のページに表示されます。
+登録されている`ociReference`は定期的にクロールされ、そこに含まれているFeatureは以下のページに表示されます。
 
 https://containers.dev/features
 
