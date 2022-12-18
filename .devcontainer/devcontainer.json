@@ -1,0 +1,11 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-18",
+	"postCreateCommand": "npm install zenn-cli",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"editorConfig.editorConfig"
+			]
+		}
+	}
+}
