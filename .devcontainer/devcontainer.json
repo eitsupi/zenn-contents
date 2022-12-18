@@ -3,8 +3,12 @@
 	"postCreateCommand": "npm install -g zenn-cli",
 	"customizations": {
 		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			},
 			"extensions": [
-				"editorConfig.editorConfig"
+				"editorConfig.editorConfig",
+				"yzhang.markdown-all-in-one"
 			]
 		}
 	}
