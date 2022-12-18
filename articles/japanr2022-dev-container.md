@@ -5,7 +5,7 @@ type: tech
 topics:
     - r
     - docker
-published: false
+published: true
 ---
 
 :::message
