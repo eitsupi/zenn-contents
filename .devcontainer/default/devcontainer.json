@@ -1,0 +1,15 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-18",
+	"postCreateCommand": "npm install -g zenn-cli",
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			},
+			"extensions": [
+				"editorConfig.editorConfig",
+				"yzhang.markdown-all-in-one"
+			]
+		}
+	}
+}
