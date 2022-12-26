@@ -1,15 +1,11 @@
 {
-	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-18",
+	"image": "ghcr.io/rocker-org/devcontainer/tidyverse:4",
 	"postCreateCommand": "npm install -g zenn-cli",
-	"customizations": {
-		"vscode": {
-			"settings": {
-				"terminal.integrated.defaultProfile.linux": "zsh"
-			},
-			"extensions": [
-				"editorConfig.editorConfig",
-				"yzhang.markdown-all-in-one"
-			]
-		}
-	}
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "lts"
+		},
+		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {}
+	},
+	"extensions": ["editorConfig.editorConfig", "yzhang.markdown-all-in-one"]
 }
