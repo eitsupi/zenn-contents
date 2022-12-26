@@ -18,7 +18,7 @@ execute:
 
 データの保存先として手軽で身近なcsvやtsvといったプレーンテキスト形式ですが、Rに読み込む方法について、初学者だった数年前に悩まされた覚えがあります。
 
-- 様々なパッケージに関数があり、どれを使えば良いのか分からない。
+- 様々なパッケージに関数があり、どれを使えば良いのかわからない。
 - 複数のファイルを読み込むにはどうすれば良いのかわからない。
 
 これらについて書かれているインターネット上の情報も古くなっていたりしますので、あえて今まとめてみました。
@@ -110,7 +110,7 @@ read.csv("csvファイルのパス", fileEncoding = "Shift_JIS")
 data.table::fread(paths_csv_examples[1])
 ```
 
-csvを文字列を直接渡してもちゃんと認識してくれます。
+csv文字列を直接渡してもちゃんと認識してくれます。
 
 ```{r}
 "
@@ -163,7 +163,7 @@ readr::read_csv(paths_csv_examples[1])
 readr::read_csv(paths_csv_examples, id = "file_path")
 ```
 
-csvを文字列を直接渡してもちゃんと認識してくれます。
+csv文字列を直接渡してもちゃんと認識してくれます。
 
 ```{r}
 "
@@ -307,7 +307,7 @@ paths_csv_examples |>
 
 [^5]: [dplyr 1.1.0 is coming soon](https://www.tidyverse.org/blog/2022/11/dplyr-1-1-0-is-coming-soon/#reframe-a-generalization-of-summarise)
 
-2022年末時点では`reframe()`という名前に関してフィードバック受付中とのことで名前変更の可能性はあるようですけれども[^6]、現時点での開発版`dplyr`ではこのようになります。
+2022年末時点では`reframe()`という名前に関してフィードバック受付中で名前変更の可能性がないとは言えませんが[^6]、現時点での開発版`dplyr`ではこのようになります。
 
 [^6]: [Feedback for alternate names for `reframe()`](https://github.com/tidyverse/dplyr/issues/6565)
 
