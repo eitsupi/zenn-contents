@@ -232,7 +232,7 @@ arrow::read_csv_arrow("csvファイルのパス", read_options = arrow::CsvReadO
 arrow::open_dataset(paths_csv_examples, format = "csv")
 ```
 
-この時点ではデータセットとしてスキーマ（列名と列の型）しか読み取っていません（余談ですが、複数ファイルを読み込む際に`readr::read_csv()`は列位置を合わせて読み込みますが、`arrow::open_dataset()`は列名を合わせて読み込むためファイル間で列位置が入れ替わっていても正常に読み込めるようです）。
+この時点ではデータセットとしてスキーマ（列名と列の型）しか読み取っていません（余談：複数ファイルを読み込む場合、`readr::read_csv()`は列位置を合わせて読み込むのに対し`arrow::open_dataset()`は列名を合わせて読み込むためファイル間で列位置が入れ替わっていても正常に読み込めるようです）。
 
 データセットを実際にデータフレームや`arrow::Table`としてメモリに読み込むときには、`dplyr::collect()`や`dplyr::compute()`を使用します（2023年1月リリース予定のバージョン11で`as.data.frame()`も使用可能になるようです）。
 
