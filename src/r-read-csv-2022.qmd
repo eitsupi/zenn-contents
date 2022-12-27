@@ -197,7 +197,7 @@ readr::read_csv("csvファイルのパス", locale = readr::locale(encoding = "S
 - 複数ファイルを簡単に読み込める。
 - tidyverseのコアパッケージなので情報が多い。
 
-### read_csv_arrow & arrow::open_dataset
+### read_csv_arrow & open_dataset
 
 Apache Arrow C++ライブラリによる読み込みを行う関数です。複数ファイルを読み込む場合は`read_csv_arrow()`の代わりに`open_dataset()`を使用します。
 
@@ -257,7 +257,7 @@ arrow::open_dataset(paths_csv_examples, format = "csv") |>
 
 ## 複数ファイルを読み込む方法
 
-前述のように`readr::read_csv()`と`arrow::open_dataset()`にはそもそも複数ファイルを読み込む機能があるわけですが、それ以外の関数で複数ファイルを読み込みたい場合の方法
+前述のように`readr::read_csv()`と`arrow::open_dataset()`にはそもそも複数ファイルを読み込む機能があるわけですが、それ以外の関数で複数ファイルを読み込みたい場合には以下のような方法を使用できます。
 
 ### map_dfr
 
