@@ -71,7 +71,7 @@ Shift_JISはできるだけ避けていきたいものです。
 ただ、読み込み速度はファイルの中身にもよるので、速度で困った場合には`read.csv()`以外をそれぞれ試してみることをおすすめします。
 
 [^1]: [大量で巨大なcsvをRで読み込む時の最適解【vroom,readr,data.table】](https://qiita.com/Ringa_hyj/items/434e3a6794bb7ed8ee14)
-[^2]: <https://twitter.com/MattDowle/status/1360073970498875394>、この投稿は`arrow`パッケージ開発者の方が「`read_arrow_csv()`は`fread()`より速い」と発表したことに対する反論で、`data.table`パッケージのNEWSからもリンクされています。
+[^2]: <https://twitter.com/MattDowle/status/1360073970498875394>、この投稿は`arrow`パッケージ開発者の方が「`read_csv_arrow()`は`fread()`より速い」と発表したことに対する反論で、`data.table`パッケージのNEWSからもリンクされています。
 
 ### read.csv
 

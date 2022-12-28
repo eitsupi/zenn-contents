@@ -585,7 +585,7 @@ sessionInfo()
 
 [^1]: [大量で巨大なcsvをRで読み込む時の最適解【vroom,readr,data.table】](https://qiita.com/Ringa_hyj/items/434e3a6794bb7ed8ee14)
 
-[^2]: <https://twitter.com/MattDowle/status/1360073970498875394>、この投稿は`arrow`パッケージ開発者の方が「`read_arrow_csv()`は`fread()`より速い」と発表したことに対する反論で、`data.table`パッケージのNEWSからもリンクされています。
+[^2]: <https://twitter.com/MattDowle/status/1360073970498875394>、この投稿は`arrow`パッケージ開発者の方が「`read_csv_arrow()`は`fread()`より速い」と発表したことに対する反論で、`data.table`パッケージのNEWSからもリンクされています。
 
 [^3]: [read all csv files in a directory using `purrr:map()`](https://stackoverflow.com/questions/62598787/read-all-csv-files-in-a-directory-using-purrrmap)
 
