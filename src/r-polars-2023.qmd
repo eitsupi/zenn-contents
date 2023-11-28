@@ -1,0 +1,90 @@
+---
+title: Polars R パッケージについて
+emoji: 🐻‍❄️
+type: tech
+topics:
+    - r
+    - rust
+published: true
+format:
+  md:
+    variant: gfm+yaml_metadata_block+hard_line_breaks
+engine: knitr
+knitr:
+  opts_chunk:
+    comment: "#>"
+execute:
+  cache: true
+---
+
+高速データフレームライブラリのPolarsといえばPythonパッケージが有名で、[H2O.aiのベンチマーク](https://h2oai.github.io/db-benchmark/)で上位に入ったことで知られていますが、今日紹介するのはRパッケージです。
+
+Polarsという名前は聞いたことあってもRパッケージについては知らない方も多いかも知れません。実は一年くらい前からPolarsの開発を行っているPolarsのGitHub組織にリポジトリがあります。
+
+https://twitter.com/eitsupi/status/1608013971428368385
+
+```{=html}
+:::message
+
+これは[R言語 Advent Calendar 2023](https://qiita.com/advent-calendar/2023/rlang)の1日目の記事です。\
+12月2日開催予定の[Japan.R 2023](https://japanr.connpass.com/event/302622/)での発表内容と関連しています。[^japanr]
+
+:::
+
+[^japanr]: 発表資料はこれから作ります……。
+```
+
+## はじめに
+
+### Polarsとは
+
+Rustで書かれたデータフレームライブラリで、内部でApache Arrowフォーマットを使用しています。\
+競合する側面を持っておりApache Arrowの一部である[Arrow DataFusionのFAQ](https://arrow.apache.org/datafusion/user-guide/faq.html)に「Polarsは執筆時点で最も高速なデータフレームライブラリの一つです（Polars is one of the fastest DataFrame libraries at the time of writing.）」と書かれるほど、高速です。
+
+開発が行われている[Gitリポジトリ](https://github.com/pola-rs/polars)にはPythonバインディング（polars Pythonパッケージ、通称py-polars）も含まれており、py-polarsはPandasの代替として人気を博しています。
+
+### Polars R パッケージとは
+
+https://rpolars.github.io/
+
+PolarsのRバインディングです。\
+[@sorhawell](https://github.com/sorhawell)さんが一年半ほどフルタイムに近い時間を費やして開発（！）し、Polarsの主要な機能をRから呼び出せます。
+
+CRANには登録されておらず（※後述）R-universeからのインストールが推奨されています。\
+以下のコマンドでインストールできるはずです。
+
+```r
+Sys.setenv(NOT_CRAN = "true") # ソースインストールの場合、この環境変数を設定することでビルド済バイナリをGitHubからダウンロードしてRustソースからのビルドを回避できます
+install.packages("polars", repos = "https://rpolars.r-universe.dev")
+```
+
+https://github.com/pola-rs/polars/issues/996
+
+## よくある質問
+
+### CRANでリリースしないのですか？
+
+2023年7月、苦闘の末にリリースしたのですが、わずか数時間後アーカイブ送りになりました。なのでCRAN上にはバージョン0.7.0のソースコードがあります。
+
+Polarsは要求するRustのバージョンが新しくCRAN上で利用可能なRustではビルドできないという問題があり、それ以降はリリースを試みていません。\
+7月に一瞬だけCRAN上のバージョンでビルド可能になったのですが、またビルド不能な状況に戻っています。
+
+もしPolarsは頻繁に破壊的変更が入るため、CRANでリリースして逆依存関係が発生した場合に破壊的変更の対応が大変になるという問題もあります。なのでCRANからインストールできるようになるのはまだ先になりそうです。
+
+### dplyrのAPIで操作したいのですが？
+
+`tidypolars`を使用できます。
+
+https://github.com/etiennebacher/tidypolars
+
+### DBIのAPIで操作したいのですが？
+
+`polarssql`を使用できます。
+
+https://github.com/rpolars/r-polarssql
+
+## 実行環境
+
+```{r}
+sessioninfo::session_info()
+```
