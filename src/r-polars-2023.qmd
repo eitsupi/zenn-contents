@@ -5,7 +5,9 @@ type: tech
 topics:
     - r
     - rust
+    - polars
 published: true
+published_at: 2023-12-01
 format:
   md:
     variant: gfm+yaml_metadata_block+hard_line_breaks
@@ -13,8 +15,6 @@ engine: knitr
 knitr:
   opts_chunk:
     comment: "#>"
-execute:
-  cache: true
 ---
 
 高速データフレームライブラリのPolarsといえばPythonパッケージが有名で、[H2O.aiのベンチマーク](https://h2oai.github.io/db-benchmark/)で上位に入ったことで知られていますが、今日紹介するのはRパッケージです。
@@ -47,18 +47,149 @@ Rustで書かれたデータフレームライブラリで、内部でApache Arr
 
 https://rpolars.github.io/
 
-PolarsのRバインディングです。\
-[@sorhawell](https://github.com/sorhawell)さんが一年半ほどフルタイムに近い時間を費やして開発（！）し、Polarsの主要な機能をRから呼び出せます。
+PolarsのRバインディングです。主要機能は実装されているので、Pythonパッケージのドキュメントとほぼ同じことができるはずです。（できない場合はissueで機能リクエストできます）\
+なお私もメンテナの一人にしてもらっています。
 
-CRANには登録されておらず（※後述）R-universeからのインストールが推奨されています。\
-以下のコマンドでインストールできるはずです。
+以下のissueの通りPolarsをRから使いたいという要望は以前からあったもののかなり大変な作業が必要で、結局[@sorhawell](https://github.com/sorhawell)さんが一年半ほどフルタイムに近い時間を費やして開発（！）してようやく今の完成度になっています。
+
+https://github.com/pola-rs/polars/issues/996
+
+CRANには登録されておらず、R-universeからのインストール推奨です。現在R-universe上のバージョンは最新リリースに固定されています。
 
 ```r
 Sys.setenv(NOT_CRAN = "true") # ソースインストールの場合、この環境変数を設定することでビルド済バイナリをGitHubからダウンロードしてRustソースからのビルドを回避できます
 install.packages("polars", repos = "https://rpolars.r-universe.dev")
 ```
 
-https://github.com/pola-rs/polars/issues/996
+なおビルド済バイナリをGitHubからダウンロードしてRustソースのコンパイルを避ける機能はバージョン0.9.0から導入されているため、`NOT_CRAN="true"`を設定している場合は`remotes::install_github()`等で過去のバージョンをインストールする場合もRustは不要です。
+
+## 使い方
+
+（今現在少し古いバージョンですが）以下のウェブサイトによくまとまっているので、こちらもご覧ください。
+
+https://ddotta.github.io/cookbook-rpolars/
+
+Polarsは凄まじい勢いで破壊的な変更を行っておりRパッケージも例外ではない点はご留意ください。
+
+### メソッドチェーン
+
+Polarsは「データフレームライブラリ」と呼ばれている通り、Rのデータフレームとほぼ同じ機能を持ったものを提供します。\
+つまりこのパッケージをインストールすることによりRのデータフレームとは別にRのデータフレームのようなものを導入することになるわけで、Rのデータフレームを操作するための関数と同じような機能を持ったPolarsのデータフレームを操作するための、大量の関数が必要になります。\
+実際、`polars`パッケージのRdファイル（ヘルプページ）の数は現在570で、これは`ggplot2`でも131（現時点での最新開発バージョン）であることと比較するととてつもない数です。
+
+これの何が問題かというと、Rでは関数を名前空間の区別なくフラットにインポートするのが一般的ということで、普通ならば関数名が衝突して困る、もしくは全関数に`pl_`のような接頭辞を付ける（※rOpenSci等で推奨されている方）ことで衝突を回避しなければなりません。
+
+しかしそれにしてもPolarsの関数は多いということで、`polars`パッケージでは`R6`パッケージによって提供されるR6クラスのように`$`によるメソッド呼び出しを基本とし、関数のエクスポートを回避しています。（かつては`R6`パッケージを使用していたが現在は未使用）
+
+トップレベルの関数も基本的に`pl`というオブジェクト（環境、`environment`型）の下にくっついています。
+
+```{r}
+library(polars)
+
+pl$polars_info()
+```
+
+`base::data.frame()`に相当する関数は`pl$DataFrame()`です。[^pl_df]
+
+[^pl_df]: Rデータフレームをpolarsデータフレームに変換する場合、`polars::as_polars_df()`という関数を使うこともできます。
+
+```{r}
+mtcars_pl = pl$DataFrame(mtcars)
+
+mtcars_pl
+```
+
+このpolarsデータフレームに対して、`filter`メソッドと`select`メソッドを使用して行と列を選択する例はこのようになります。列は`pl$col()`関数で指定します。
+
+```{r}
+mtcars_pl$
+  filter(pl$col("mpg") > 22)$
+  select(pl$col("cyl"))
+```
+
+これはpy-polarsのドット`.`を使用したメソッドチェーンをドルマーク`$`で書き直したようなものなので、基本的にPython用のドキュメントを見ればどのように書けば良いのか分かるはずです。（ただし一部関数名はRust、Python、Rのそれぞれで異なります）
+
+### Expression
+
+Polars独特の仕組みとして、Expressionがあります。\
+例えば上記の例で出てきた以下のようなものです。
+
+```{r}
+pl$col("mpg")
+```
+
+NSEによって引用符で囲まずに列名を指定するのが一般的なRの世界では冗長に見えますが、Expressionが独自のクラスを持っているお陰で関数定義は単純です。（一方`arrow`パッケージのdplyrクエリ内で自作関数を使おうとすると大変です）
+
+```{r}
+# Expressionを返す関数を定義する
+foo <- function(col_name) {
+  polars::pl$col(col_name) * 100
+}
+
+# selectメソッド内で評価させる
+mtcars_pl$select(new = foo("cyl"))
+```
+
+なお上記で使用している`*`演算子も、Expressionクラスの`mul`メソッドを呼び出すように定義されたS3メソッドとして定義されています。
+
+```{r}
+getAnywhere(`*.Expr`)
+```
+
+### LazyFrame
+
+Polarsの目玉機能の一つが、LazyFrameを使用した遅延評価です。\
+`dplyr`に慣れ親しんだ方ならば`dtplyr::lazy_dt`や`dbplyr::lazy_frame`をご存じかも知れませんが、それらと同じようにクエリを保存し最後に評価する機能です。
+
+`as_polars_lf()`関数でRデータフレームやpolarsデータフレームからLazyFrameを作成できます。
+
+```{r}
+mtcars_lf <- as_polars_lf(mtcars_pl)$
+  filter(pl$col("mpg") > 22)$
+  select(pl$col("cyl"))
+
+mtcars_lf
+```
+
+`collect`メソッド（もしくは`fetch`メソッド）で評価します。
+
+```{r}
+mtcars_lf$collect()
+```
+
+私は試したことはないのですが、評価時にストリーミングモードを選択することでRAMに乗り切らない巨大なデータセットも処理できるらしいです。
+
+`collect`メソッドの`streaming`引数でストリーミングモードを有効化できます。
+
+```{r}
+data_dir <- tempfile()
+arrow::write_dataset(mtcars, data_dir, partitioning = c("cyl", "gear"))
+
+pl$scan_parquet(paste0(data_dir, "/**/*.parquet"))$　# Hive-styleパーティションを読み込めるぞ！
+  filter(pl$col("mpg") > 22)$
+  select(pl$col("cyl"))$
+  collect(streaming = TRUE)
+```
+
+### nanoarrow
+
+nanoarrowというApache Arrowのサブプロジェクトをご存じでしょうか？\
+巨大でビルドが大変なArrow C++ライブラリ（libarrow）の代わりに最小限の機能を提供するCライブラリで、RパッケージがCRANから利用可能です。
+
+最近PythonのSnowflakeコネクターは`pyarrow`から`nanoarrow`に切り替えて色々捗るようになったそうです。
+
+https://medium.com/snowflake/announcing-the-ga-release-of-snowflake-python-connector-with-nanoarrow-1d70fd8ba3b1
+
+`polars`はnanoarrowと統合した最初期のパッケージで、polarsデータフレームからnanoarrow array streamへの変換をサポートしています。
+
+```{r}
+mtcars_pl |>
+  nanoarrow::as_nanoarrow_array_stream()
+```
+
+今年中にCRANリリース予定[^dbi]の`DBI`パッケージ新バージョンではnanoarrow array streamによるデータ交換がサポートされる予定など、`nanoarrow`は今後要注目です。
+
+[^dbi]: https://fosstodon.org/@kirill/111477378191048567
 
 ## よくある質問
 
