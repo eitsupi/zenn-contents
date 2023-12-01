@@ -32,6 +32,12 @@ https://twitter.com/eitsupi/status/1608013971428368385
 
 [^japanr]: 発表資料はこれから作ります……。
 
+:::message
+
+後付けで[Polars Advent Calendar 2023](https://qiita.com/advent-calendar/2023/polars)の1日目の記事ということにもしました。
+
+:::
+
 ## はじめに
 
 ### Polarsとは
