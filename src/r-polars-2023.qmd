@@ -29,6 +29,8 @@ https://twitter.com/eitsupi/status/1608013971428368385
 これは[R言語 Advent Calendar 2023](https://qiita.com/advent-calendar/2023/rlang)の1日目の記事です。\
 12月2日開催予定の[Japan.R 2023](https://japanr.connpass.com/event/302622/)での発表内容と関連しています。[^japanr]
 
+（2023-12-02 追記） 発表しました。 → [発表資料](https://eitsupi.github.io/tokyorslide/japanr2023/)
+
 :::
 
 [^japanr]: 発表資料はこれから作ります……。
