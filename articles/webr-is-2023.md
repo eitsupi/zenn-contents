@@ -11,7 +11,9 @@ published: true
 published_at: 2023-12-07
 ---
 
-個人的に2023年のR言語界隈でホットだったWebRについて、日本語での紹介を見かけなかったので、私の知る範囲で簡単にまとめます。
+個人的に2023年のR言語界隈でホットだったWebR[^webr]について、日本語での紹介を見かけなかったので、私の知る範囲で簡単にまとめます。
+
+[^webr]: "WebR"なのか"webR"なのか、公式ドキュメント内でも表記が揺れておりよく分かりませんがとりあえず本記事内では"WebR"と表記します。
 
 :::message
 
@@ -62,21 +64,47 @@ https://twitter.com/gwstagg/status/1495495339444473858
 
 https://github.com/coatless/quarto-webr
 
+また別のQuarto拡張`shinylive`でShinyアプリを埋め込むこともできるとか。（当初はPyodideによるPython版Shinyのみだっただったものが現在ではWebRによるR版Shinyにも対応したようです）
+
+https://github.com/quarto-ext/shinylive
+
 興味のある方はこちらも是非お試しください。
 
 ## 利用可能なRパッケージ
 
-純粋なRコードのみで書かれたRパッケージはともかく、
+通常のRと同じく、WebRのREPL内でも`install.packages()`関数を実行することで外部パッケージをインストールすることができます。\
+デフォルトで使用されるリポジトリは<https://repo.r-wasm.org/>で、現在約10,000個のパッケージが利用可能なようです。このページをブラウザで開くとWebRベースのShinyアプリになっていて面白いです。
 
-たとえばPython界隈ではPandas 3.0からpyarrowを必須依存関係にするという話の中で、pyarrowをWASM化できていないためpyodideでPandas使えなくなって大変という話があった（ある？）ようです。[^pyarrow]
+現在CRANに存在するパッケージは20,000程度らしく、約半分のパッケージをWebRで利用できることになります。私は「意外と多いな」という印象を持ちました。
 
-[^pyarrow]: まだ未解決？ https://github.com/pyodide/pyodide/issues/2933
+また、11月からR-universeもすべてのRパッケージをWebR用にビルドするようになったため、（ビルドに成功しているパッケージについては）R-universeからもインストール可能です。詳しくはrOpenSciのブログ記事をどうぞ。
+
+https://ropensci.org/blog/2023/11/17/runiverse-wasm/
+
+### 利用できないRパッケージ？
+
+どのようなパッケージが利用できない（ビルドできていない）のでしょうか？\
+私はWASMについて全く理解できていないものの、一つ思い当たったのは、Python界隈でPandas 3.0からpyarrowを必須依存関係にするという話の中で挙がっていた「`pyarrow`をWASM化できていないためPyodideでPandas使えなくなっちゃう」という話です。[^pyarrow]
+となれば`pyarrow`と同じlibarrowに基づいている`arrow`パッケージもビルドできていないのでは？と思い試したら、やはりWebRでは利用できませんでした。
+
+[^pyarrow]: 現時点では未解決？ https://github.com/pyodide/pyodide/issues/2933
+
+ビルドの大変なパッケージとして他に思い当たった`duckdb`は普通に使えました。DuckDBはどこでも使えますね。
+
+`gifski`はじめRustソースコードを含むパッケージも全滅しているようですけれども、最近`hellorust`のソースコードを改変してWebRで動かせたという発表があったので、いずれ動くようになるかもしれません。
+
+https://mstdn.social/@gws/111494461618624785
 
 ## Node.jsでの利用
 
+最近公開された以下のウェブサイトではNode.jsでWebRを使ったCLIツールを作る方法が解説されています。
+
 https://rud.is/books/webr-cli-book/
 
-## 所感
+この記事ではこの本の通りにCLIツールを作ってみようかとも思っていたのですが時間切れになったのでまたの機会に試してみたいと思います。
 
-Posit社がここ数年でWebRやPython版Shinyなどに注力していたのは\
-最近開発版Quartoに追加されたダッシュボード機能を代表するようなQuartoの機能拡充が目的の一つにあるのだろうと思っており、Quartoへの力の入れっぷり本当にすごいなと改めて感心しております。
+## その他
+
+Rパッケージ用ウェブサイトとして広く利用されている`pkgdown`に「ExamplesをWebRで動かせるようにしようぜ」的な話があるのはだいぶ夢があるなと思いました。
+
+https://github.com/r-lib/pkgdown/issues/2348
