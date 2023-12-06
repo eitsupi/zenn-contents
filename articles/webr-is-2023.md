@@ -33,7 +33,7 @@ https://github.com/r-wasm/webr
 
 現在はPosit社のメンバーがメインとなって[r-wasmというGitHub組織](https://github.com/r-wasm)で開発されています。
 
-元々はGeorge Staggさん（恐らくWebR開発のために現在はPosit社所属されている）の個人プロジェクトだったのだと思われます。\
+元々はGeorge Staggさん（恐らくWebR開発のために現在はPosit社に所属されている）の個人プロジェクトだったのだと思われます。\
 Gitリポジトリの履歴を見ると最初のコミットは2022年1月18日だったようです。
 
 私は2022年2月に以下のツイートをリツイートしていたので、割とリポジトリのできた直後にWebRを知ったようです。
@@ -45,7 +45,7 @@ https://twitter.com/gwstagg/status/1495495339444473858
 試しに今やってみたら、Rの読み込みに**2分**かかりました。
 
 ![old webr repl](/images/webr-is-2023/old-webr.jpg)
-*WebR君が`plot(mtcars)`を実行するするまで2分かかりました*
+*WebRさんが`plot(mtcars)`を実行するするまで2分かかりました*
 
 しかし、それは完全に過去の話です。\
 最新（バージョン0.2.3-dev）の[webR REPL app](https://webr.r-wasm.org/latest/)を実行してみると、**5秒**でRを使用可能になりました。
