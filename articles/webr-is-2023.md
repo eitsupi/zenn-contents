@@ -1,5 +1,5 @@
 ---
-title: 今、WebRが熱い！
+title: ブラウザで動くR、WebRが熱い！
 emoji: 🕸️
 type: tech
 topics:
@@ -51,12 +51,14 @@ https://twitter.com/gwstagg/status/1495495339444473858
 ![new webr repl](/images/webr-is-2023/new-webr.jpg)
 *最新の豪華で早いWebRデモサイト*
 
+このくらい早いと、「ちょっとR動かしてみたいな」というときはこのページを開くだけで充分かもしれません。
+
 ## WebRでできること
 
 ……は私も詳しくないので、[WebRの公式ドキュメント](https://docs.r-wasm.org/webr/latest/)をご覧いただきたいです。
 
 ところで、この公式ドキュメントはQuartoで作成されたウェブサイトで、WebRが埋め込まれていることに気づくと思います。\
-同じようにQuartoドキュメントにWebRを埋め込みたい場合、`quarto-webr`というQuarto拡張機能を使用すると専用のコードブロック内に書いたRコードをWebRで簡単に実行させられます。
+同じようにQuartoウェブサイトにWebRを埋め込みたい場合、`quarto-webr`というQuarto拡張機能を使用すると専用のコードブロック内に書いたRコードをWebRで簡単に実行させられます。
 
 https://github.com/coatless/quarto-webr
 
@@ -64,7 +66,17 @@ https://github.com/coatless/quarto-webr
 
 ## 利用可能なRパッケージ
 
+純粋なRコードのみで書かれたRパッケージはともかく、
+
+たとえばPython界隈ではPandas 3.0からpyarrowを必須依存関係にするという話の中で、pyarrowをWASM化できていないためpyodideでPandas使えなくなって大変という話があった（ある？）ようです。[^pyarrow]
+
+[^pyarrow]: まだ未解決？ https://github.com/pyodide/pyodide/issues/2933
+
 ## Node.jsでの利用
 
 https://rud.is/books/webr-cli-book/
 
+## 所感
+
+Posit社がここ数年でWebRやPython版Shinyなどに注力していたのは\
+最近開発版Quartoに追加されたダッシュボード機能を代表するようなQuartoの機能拡充が目的の一つにあるのだろうと思っており、Quartoへの力の入れっぷり本当にすごいなと改めて感心しております。
