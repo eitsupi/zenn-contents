@@ -65,7 +65,7 @@ https://github.com/mitsuhiko/rye/discussions/6
 
 https://github.com/r-lib/rig
 
-詳しくはREADMEを読んでいただきたいのですけれども、rigはWindows、macOS、Linuxに対応した、Rを管理し便利な機能を提供するCLIツールです。
+詳しくはREADMEを読んでいただきたいのですけれども、rigはWindows（amd64）、macOS（amd64およびARM64）、Linux（の一部ディストリビューション、amd64およびarm64）に対応した、Rを管理し便利な機能を提供するCLIツールです。
 例えば複数バージョンのRをコマンド一つで切り替えることができます。
 
 注意点としてrigで管理できるのはrig経由でインストールされたRのみということで、既にインストールされているRを使用することはできません。
@@ -167,3 +167,33 @@ R 4.2.Xの最終バージョンであるR 4.2.3がインストールされまし
 macOSとLinuxの場合はシムリンクを書き換えることで同じ機能が実現されています。
 
 https://github.com/r-lib/rig/blob/1e335785f95c3669bf04a43bc6a0da4862e401db/src/alias.rs
+
+WindowsにRをインストールすると古いバージョンのファイル達が残ったまま新しいバージョンが入るので新しいバージョン入れるときにパスを通し直したり面倒だと思っていたのですが、rigを使えばrigのコマンドで切り替えられて便利ですね。
+
+## Rパッケージインストールの何でも屋 pak
+
+先ほどrigでRをインストールしたときのログで、`pak`なるものもインストールされていたことに気付いたでしょうか？
+[`pak`](https://pak.r-lib.org/)はRパッケージをインストールするための多機能パッケージです。
+
+様々な機能があるので詳細はドキュメントを確認してください。
+一番覚えやすい関数は`pak::pak()`で、これは`install.packages()`と同じ単純なデフォルトリポジトリからのインストールに加えて、`remotes::install_github()`のようにGitHubからのインストールなどもできます。
+
+最近では`dplyr`などのパッケージのREADMEでは開発バージョンのインストール用として書かれている関数が`remotes::install_github()`から`pak::pak()`に切り替わっています。
+
+```r:R
+# GitHubのtidyverse/dplyrリポジトリのHEADからdplyrをインストール
+pak::pak("tidyverse/dplyr")
+```
+
+https://github.com/tidyverse/dplyr/blob/b359331a448a693546d77245b0de4d405bab3886/README.md?plain=1#L75-L83
+
+GitHub上でRパッケージを開発している方はGitHub Actionsで`r-lib/actions/setup-r-dependencies`を使って依存Rパッケージをインストールしているかも知れません。このアクション内で`pak`が使用されています。
+Linux上にRパッケージをインストールする場合はシステム依存関係をR外でインストールしなければならないことが多々ありますが、`pak`はシステム依存関係を自動的にインストールする機能を持っているため、GitHub ActionsでUbuntuランナーを使用してもシステム依存関係を気にしなくて済むようになっています。
+
+ソースインストール時にビルド中のログを表示しないのでデバッグしづらいなどの細かい欠点もありますが多機能で様々な場面で役に立つので、ぜひ一度公式ドキュメントを読んでみてください。
+
+数ヶ月前にバージョン1.0.0に到達した、プロジェクト毎のパッケージ固定を可能にする`renv`パッケージには`pak`をバックエンドとして使用するオプションがあったりもします。
+
+## バイナリパッケージインストールの強い味方 p3m
+
+Posit Package Manager（旧称RStudio Package Manager）という、Posit社の製品があります。
