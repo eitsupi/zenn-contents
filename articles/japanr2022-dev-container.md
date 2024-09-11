@@ -6,6 +6,7 @@ topics:
     - r
     - docker
     - vscode
+    - devcontainer
 published: true
 ---
 
