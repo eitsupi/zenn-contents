@@ -1,5 +1,5 @@
 ---
-title: PositronをDev Containerで使いたい！（DevPodを使おう！）
+title: PositronをDev Containerで使いたい（DevPodを使おう！）
 emoji: 📦
 type: tech
 topics:
