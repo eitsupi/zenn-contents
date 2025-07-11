@@ -145,7 +145,7 @@ DevPod Desktopの画面上でコンテナの停止や再開、削除などの操
 
 ![ワークスペースの管理画面](/images/devpod-positron-devcontainer/devpod.png)
 
-IDEを選択肢ながらの再開もできますので、色々なIDEを試してみるのも簡単そうで良いですね。
+IDEを選択しながらの再開もできますので、色々なIDEを試してみるのも簡単そうで良いですね。
 
 ![既存コンテナを開始する際にもIDEを選択できる](/images/devpod-positron-devcontainer/start-with.png)
 
