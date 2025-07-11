@@ -143,11 +143,11 @@ https://rocker-project.org/images/devcontainer/features.html
 
 DevPod Desktopの画面上でコンテナの停止や再開、削除などの操作を行えます。Docker Desktopに似ていますね。
 
-![devpod](/images/devpod-positron-devcontainer/devpod.png)
+![ワークスペースの管理画面](/images/devpod-positron-devcontainer/devpod.png)
 
 IDEを選択肢ながらの再開もできますので、色々なIDEを試してみるのも簡単そうで良いですね。
 
-![ワークスペースの管理画面](/images/devpod-positron-devcontainer/start-with.png)
+![既存コンテナを開始する際にもIDEを選択できる](/images/devpod-positron-devcontainer/start-with.png)
 
 ## まとめ
 
